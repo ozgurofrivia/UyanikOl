@@ -582,8 +582,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.music_note),
-              title: Text('Alarm Sesi Seç'),
+              leading: const Icon(Icons.music_note),
+              title: const Text('Alarm Sesi Seç'),
               onTap: () async {
                 await pickAlarmSound();
                 if (context.mounted) Navigator.pop(context);
@@ -595,9 +595,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-
             SwitchListTile(
-              title: Text('Titreşim'),
+              title: const Text('Titreşim'),
               value: _vibrationEnabled,
               onChanged: (val) async {
                 setState(() => _vibrationEnabled = val);
@@ -606,10 +605,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 SharedPreferences prefs = await SharedPreferences.getInstance();
                 await prefs.setBool('vibration_enabled', val);
               },
-              secondary: Icon(Icons.vibration),
+              secondary: const Icon(Icons.vibration),
             ),
             ListTile(
-              title: Text('Tema Seç'),
+              title: const Text('Tema Seç'),
               trailing: Switch(
                 value: Provider.of<ThemeNotifier>(
                   context,
@@ -625,9 +624,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       final darkStyle = await rootBundle.loadString(
                         'assets/maps/dark_map.json',
                       );
-                      mapController.setMapStyle(darkStyle);
+                      mapController!.setMapStyle(darkStyle);
                     } else {
-                      mapController.setMapStyle(null);
+                      mapController!.setMapStyle(null);
                     }
                   }
                 },
@@ -657,11 +656,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-          ],
-        ),
-      ),
       body: _currentPosition == null
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : GestureDetector(
               behavior:
                   HitTestBehavior.translucent, // boş alanlarda da çalışsın
@@ -835,14 +831,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                   pos.latitude,
                                   pos.longitude,
                                 );
-                                mapController.animateCamera(
+                                mapController?.animateCamera(
                                   CameraUpdate.newLatLngZoom(latLng, 14),
                                 );
                               },
-
                               backgroundColor: colorScheme.surface,
                               foregroundColor: colorScheme.onSurface,
-
                               child: const Icon(Icons.my_location),
                               tooltip: 'Konuma Git',
                             ),
@@ -851,7 +845,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               heroTag: "compassReset",
                               onPressed: () {
                                 if (_lastCameraPosition != null) {
-                                  mapController.animateCamera(
+                                  mapController?.animateCamera(
                                     CameraUpdate.newCameraPosition(
                                       CameraPosition(
                                         target: _lastCameraPosition!.target,

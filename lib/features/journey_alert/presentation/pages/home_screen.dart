@@ -609,14 +609,54 @@ class _HomeScreenState extends State<HomeScreen> {
               secondary: Icon(Icons.vibration),
             ),
             ListTile(
-              leading: Icon(Icons.dark_mode),
-              title: Text('Karanlık Moda Geç'),
-              onTap: () async {
-                _toggleDarkMode();
-                if (context.mounted) Navigator.pop(context);
-              },
-              subtitle: Text(_isDarkMode ? "Karanlık" : "Açık"),
+              title: Text('Tema Seç'),
+              trailing: Switch(
+                value: Provider.of<ThemeNotifier>(
+                  context,
+                ).isDarkMode, // direkt provider'dan oku
+                onChanged: (value) async {
+                  Provider.of<ThemeNotifier>(
+                    context,
+                    listen: false,
+                  ).toggleTheme();
+
+                  if (mapController != null) {
+                    if (value) {
+                      final darkStyle = await rootBundle.loadString(
+                        'assets/maps/dark_map.json',
+                      );
+                      mapController.setMapStyle(darkStyle);
+                    } else {
+                      mapController.setMapStyle(null);
+                    }
+                  }
+                },
+                thumbIcon: MaterialStateProperty.resolveWith<Icon?>((
+                  Set<MaterialState> states,
+                ) {
+                  if (states.contains(MaterialState.selected)) {
+                    return const Icon(
+                      Icons.dark_mode,
+                      size: 18,
+                      color: Colors.white,
+                    );
+                  }
+                  return const Icon(
+                    Icons.wb_sunny,
+                    size: 18,
+                    color: Colors.orange,
+                  );
+                }),
+              ),
+              subtitle: Text(
+                Provider.of<ThemeNotifier>(context).isDarkMode
+                    ? "Karanlık"
+                    : "Açık",
+              ),
             ),
+          ],
+        ),
+      ),
           ],
         ),
       ),

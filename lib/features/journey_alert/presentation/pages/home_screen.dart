@@ -68,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Set<Marker> _markers = {};
   String? _selectedMarkerId;
 
-  final String apiKey = 'AIzaSyCjlbhruDy4N0y6zUjrC9Ktguc3BAQ14uk';
+  final String apiKey = '';
 
   LatLng? _trackingTarget;
   bool _isTracking = false;
